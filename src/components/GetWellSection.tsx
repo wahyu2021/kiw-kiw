@@ -2,6 +2,13 @@
 
 import { useEffect, useState, useRef } from 'react';
 
+/**
+ * GetWellSection Component
+ * 
+ * Section berisi pesan-pesan get well berupa tips kesehatan.
+ * Card muncul dengan animasi scroll-triggered menggunakan IntersectionObserver.
+ * Menampilkan tips istirahat, minum obat, minum air hangat, dan makan bergizi.
+ */
 export default function GetWellSection() {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
@@ -50,7 +57,6 @@ export default function GetWellSection() {
 
   return (
     <section id="get-well" ref={sectionRef} className="relative py-20 px-6">
-      {/* Section header */}
       <div className="text-center mb-12">
         <span className="text-3xl mb-4 block">🌷</span>
         <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-3">
@@ -61,7 +67,6 @@ export default function GetWellSection() {
         </p>
       </div>
 
-      {/* Cards grid */}
       <div className="max-w-lg mx-auto grid gap-6">
         {messages.map((message, index) => (
           <div
@@ -87,7 +92,6 @@ export default function GetWellSection() {
         ))}
       </div>
 
-      {/* Last Card */}
       <div className="text-center mt-12">
         <div className="glass-card inline-block px-8 py-4 animate-pulse-glow">
           <p className="text-pink-100/80 text-lg">

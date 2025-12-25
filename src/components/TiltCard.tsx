@@ -2,11 +2,19 @@
 
 import { useState, useEffect, useRef } from 'react';
 
+/** Props untuk TiltCard component */
 interface TiltCardProps {
   children: React.ReactNode;
   className?: string;
 }
 
+/**
+ * TiltCard Component
+ * 
+ * Wrapper yang memberikan efek 3D tilt saat mouse/touch bergerak di atasnya.
+ * Termasuk efek glare yang mengikuti posisi pointer.
+ * Smooth animation dengan transform perspective.
+ */
 export default function TiltCard({ children, className = '' }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState('');
@@ -65,7 +73,6 @@ export default function TiltCard({ children, className = '' }: TiltCardProps) {
       style={{ transform, transformStyle: 'preserve-3d' }}
     >
       {children}
-      {/* Glare effect */}
       <div
         className="absolute inset-0 rounded-3xl pointer-events-none opacity-30"
         style={{

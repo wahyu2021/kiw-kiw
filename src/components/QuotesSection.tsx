@@ -2,29 +2,22 @@
 
 import { useState, useEffect, useRef } from 'react';
 
+/** Daftar quotes motivasi dengan emoji */
 const quotes = [
-  {
-    text: "Kamu lebih kuat dari yang kamu kira",
-    emoji: "💫"
-  },
-  {
-    text: "Setiap hari adalah kesempatan baru",
-    emoji: "🌅"
-  },
-  {
-    text: "Sakit itu hanya sebentar kok",
-    emoji: "🌈"
-  },
-  {
-    text: "Temanmu selalu ada di sini untukmu",
-    emoji: "🌸"
-  },
-  {
-    text: "Aku tau kamu kuat!",
-    emoji: "⭐"
-  }
+  { text: "Kamu lebih kuat dari yang kamu kira", emoji: "💫" },
+  { text: "Setiap hari adalah kesempatan baru", emoji: "🌅" },
+  { text: "Sakit itu hanya sebentar kok", emoji: "🌈" },
+  { text: "Temanmu selalu ada di sini untukmu", emoji: "🌸" },
+  { text: "Aku tau kamu kuat!", emoji: "⭐" }
 ];
 
+/**
+ * QuotesSection Component
+ * 
+ * Section carousel quotes motivasi dengan efek typewriter.
+ * Auto-rotate setiap 6 detik, bisa manual tap dot indicator.
+ * Animasi scroll-triggered dengan IntersectionObserver.
+ */
 export default function QuotesSection() {
   const [currentQuote, setCurrentQuote] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
@@ -49,7 +42,6 @@ export default function QuotesSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Typewriter effect
   useEffect(() => {
     const text = quotes[currentQuote].text;
     let index = 0;
@@ -69,7 +61,6 @@ export default function QuotesSection() {
     return () => clearInterval(typeInterval);
   }, [currentQuote]);
 
-  // Auto change quote
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % quotes.length);
@@ -80,13 +71,11 @@ export default function QuotesSection() {
 
   return (
     <section ref={sectionRef} className="relative py-24 px-6">
-      {/* Background glow */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-80 h-80 bg-pink-500/10 blur-[100px] rounded-full animate-pulse"></div>
       </div>
 
       <div className={`relative max-w-md mx-auto text-center transition-all duration-1000 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-        {/* Quote card */}
         <div className="glass-card p-10 md:p-12 animate-pulse-glow">
           <div className="text-4xl mb-6 animate-bounce-soft">
             {quotes[currentQuote].emoji}
@@ -98,7 +87,6 @@ export default function QuotesSection() {
             &rdquo;
           </p>
 
-          {/* Quote indicators */}
           <div className="flex justify-center gap-2 mb-4">
             {quotes.map((_, index) => (
               <button
@@ -117,7 +105,6 @@ export default function QuotesSection() {
         </div>
       </div>
 
-      {/* Decorative */}
       <div className="absolute top-12 left-12 text-pink-300/20 text-2xl animate-float">✦</div>
       <div className="absolute bottom-12 right-12 text-violet-400/20 text-3xl animate-sway delay-500">❀</div>
     </section>

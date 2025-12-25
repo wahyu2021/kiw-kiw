@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 
+/** Daftar pesan personal dengan icon dan judul */
 const messages = [
   {
     title: "Makasih...",
@@ -20,6 +21,13 @@ const messages = [
   }
 ];
 
+/**
+ * MessageSection Component
+ * 
+ * Section berisi pesan-pesan personal dari teman.
+ * Card muncul dengan animasi slide dari kiri/kanan (alternating).
+ * Menggunakan IntersectionObserver untuk scroll-triggered animation.
+ */
 export default function MessageSection() {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
@@ -45,7 +53,6 @@ export default function MessageSection() {
 
   return (
     <section ref={sectionRef} className="relative py-20 px-6">
-      {/* Section header */}
       <div className="text-center mb-16">
         <span className="text-pink-300/40 text-2xl">✦</span>
         <h2 className="text-3xl md:text-4xl font-bold gradient-text-soft mt-4 mb-3">
@@ -54,7 +61,6 @@ export default function MessageSection() {
         <p className="text-pink-200/50 text-sm">Yang kamu panggil mr. busy</p>
       </div>
 
-      {/* Message cards */}
       <div className="max-w-lg mx-auto space-y-6">
         {messages.map((message, index) => (
           <div
@@ -69,24 +75,20 @@ export default function MessageSection() {
             }`}
             style={{ transitionDelay: `${index * 150}ms` }}
           >
-            {/* Card icon */}
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">{message.icon}</span>
               <h3 className="text-xl font-semibold text-pink-100">{message.title}</h3>
             </div>
 
-            {/* Card content */}
             <p className="text-pink-100/70 leading-relaxed text-base md:text-lg">
               {message.content}
             </p>
 
-            {/* Decorative corner gradient */}
             <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-gradient-to-tl from-pink-500/10 to-transparent rounded-full blur-xl"></div>
           </div>
         ))}
       </div>
 
-      {/* Decorative elements */}
       <div className="absolute top-12 right-8 text-pink-300/20 text-4xl animate-rotate-slow">✿</div>
       <div className="absolute bottom-20 left-6 text-violet-400/20 text-3xl animate-float delay-500">★</div>
     </section>

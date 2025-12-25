@@ -2,10 +2,18 @@
 
 import { useEffect, useState } from 'react';
 
+/** Props untuk SplashScreen component */
 interface SplashScreenProps {
   onComplete: () => void;
 }
 
+/**
+ * SplashScreen Component
+ * 
+ * Loading screen dengan progress bar dan animasi welcome.
+ * Progress accelerating dari 0-100%, kemudian tampilkan pesan selamat datang.
+ * Auto-dismiss setelah 3 detik total.
+ */
 export default function SplashScreen({ onComplete }: SplashScreenProps) {
   const [progress, setProgress] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
@@ -19,14 +27,12 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
   useEffect(() => {
     if (!mounted) return;
     
-    // Animate progress from 0 to 100
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
           return 100;
         }
-        // Accelerating progress
         const increment = prev < 70 ? 2 : prev < 90 ? 3 : 5;
         return Math.min(prev + increment, 100);
       });
@@ -37,11 +43,8 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
 
   useEffect(() => {
     if (progress === 100) {
-      // Show welcome message after progress complete
       setTimeout(() => setShowWelcome(true), 300);
-      // Start fade out after showing welcome
       setTimeout(() => setFadeOut(true), 2500);
-      // Complete splash screen
       setTimeout(() => onComplete(), 3000);
     }
   }, [progress, onComplete]);
@@ -65,16 +68,13 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
         fadeOut ? 'opacity-0' : 'opacity-100'
       }`}
     >
-      {/* Decorative elements */}
       <div className="absolute top-20 left-10 text-2xl animate-float text-pink-300/30">✿</div>
       <div className="absolute top-32 right-16 text-xl animate-sway text-violet-400/30">✦</div>
       <div className="absolute bottom-32 left-16 text-xl animate-bounce-soft text-pink-200/30">❀</div>
       <div className="absolute bottom-20 right-10 text-2xl animate-float-slow text-violet-300/30">★</div>
 
       {!showWelcome ? (
-        // Loading state
         <div className="text-center">
-          {/* Percentage */}
           <div className="mb-8">
             <span className="text-7xl md:text-8xl font-bold gradient-text tabular-nums">
               {progress}
@@ -82,7 +82,6 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             <span className="text-4xl md:text-5xl font-bold gradient-text">%</span>
           </div>
 
-          {/* Progress bar */}
           <div className="w-64 md:w-80 h-2 bg-white/10 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-pink-500 to-violet-500 rounded-full transition-all duration-100"
@@ -90,13 +89,11 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             />
           </div>
 
-          {/* Loading text */}
           <p className="text-pink-200/60 text-sm mt-6 animate-pulse">
             Memuat sesuatu yang spesial...
           </p>
         </div>
       ) : (
-        // Welcome message
         <div className="text-center animate-fade-in-up">
           <div className="mb-4">
             <span className="text-3xl">✨</span>

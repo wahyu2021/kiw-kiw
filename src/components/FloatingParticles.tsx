@@ -2,31 +2,38 @@
 
 import { useEffect, useState } from 'react';
 
+/** Interface untuk data particle */
 interface Particle {
   id: number;
   x: number;
   y: number;
   size: number;
-  type: 'star' | 'flower' | 'sparkle';
+  type: 'star' | 'flower';
   delay: number;
   duration: number;
   color: string;
 }
 
+/** Palette warna untuk particles */
 const colors = [
-  'rgba(244, 114, 182, 0.6)', // pink-400
-  'rgba(167, 139, 250, 0.6)', // violet-400
-  'rgba(249, 168, 212, 0.5)', // pink-300
-  'rgba(251, 207, 232, 0.4)', // pink-200
-  'rgba(255, 255, 255, 0.3)', // white
+  'rgba(244, 114, 182, 0.5)',
+  'rgba(167, 139, 250, 0.5)',
+  'rgba(249, 168, 212, 0.4)',
 ];
 
+/** Symbol mapping untuk particle types */
 const symbols = {
-  star: ['✦', '✧', '★', '☆', '✯'],
-  flower: ['✿', '❀', '✾', '❁', '✽'],
-  sparkle: ['·', '•', '◦'],
+  star: ['✦', '★'],
+  flower: ['✿', '❀'],
 };
 
+/**
+ * FloatingParticles Component
+ * 
+ * Background decorative dengan particles animasi floating.
+ * Menggunakan 12 particles untuk balance visual dan performance.
+ * Random position, size, dan animation delay untuk variasi natural.
+ */
 export default function FloatingParticles() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [mounted, setMounted] = useState(false);
@@ -34,39 +41,29 @@ export default function FloatingParticles() {
   useEffect(() => {
     setMounted(true);
     
-    const generateParticles = () => {
-      const newParticles: Particle[] = [];
-      const count = window.innerWidth < 640 ? 20 : 35;
+    const count = 12;
+    const newParticles: Particle[] = [];
 
-      for (let i = 0; i < count; i++) {
-        const types: ('star' | 'flower' | 'sparkle')[] = ['star', 'flower', 'sparkle'];
-        newParticles.push({
-          id: i,
-          x: Math.random() * 100,
-          y: Math.random() * 100,
-          size: Math.random() * 16 + 8,
-          type: types[Math.floor(Math.random() * types.length)],
-          delay: Math.random() * 5,
-          duration: Math.random() * 4 + 6,
-          color: colors[Math.floor(Math.random() * colors.length)],
-        });
-      }
-      setParticles(newParticles);
-    };
-
-    generateParticles();
-    window.addEventListener('resize', generateParticles);
-    return () => window.removeEventListener('resize', generateParticles);
+    for (let i = 0; i < count; i++) {
+      const types: ('star' | 'flower')[] = ['star', 'flower'];
+      newParticles.push({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 12 + 10,
+        type: types[Math.floor(Math.random() * types.length)],
+        delay: Math.random() * 3,
+        duration: Math.random() * 4 + 8,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+    setParticles(newParticles);
   }, []);
 
-  // Don't render on server to avoid hydration mismatch
-  if (!mounted) {
-    return null;
-  }
+  if (!mounted) return null;
 
   const getSymbol = (particle: Particle) => {
     const typeSymbols = symbols[particle.type];
-    // Use particle id for consistent symbol selection
     return typeSymbols[particle.id % typeSymbols.length];
   };
 
@@ -75,15 +72,15 @@ export default function FloatingParticles() {
       {particles.map((particle) => (
         <span
           key={particle.id}
-          className="absolute opacity-0"
+          className="absolute"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
             fontSize: `${particle.size}px`,
             color: particle.color,
-            animation: `float ${particle.duration}s ease-in-out infinite, sparkle 3s ease-in-out infinite`,
+            animation: `float ${particle.duration}s ease-in-out infinite`,
             animationDelay: `${particle.delay}s`,
-            textShadow: `0 0 10px ${particle.color}`,
+            opacity: 0.6,
           }}
         >
           {getSymbol(particle)}

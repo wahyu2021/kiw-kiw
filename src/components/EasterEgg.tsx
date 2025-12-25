@@ -3,6 +3,13 @@
 import { useState } from 'react';
 import { useConfetti } from '@/hooks/useConfetti';
 
+/**
+ * EasterEgg Component
+ * 
+ * Tombol tersembunyi di pojok kanan bawah yang menampilkan pesan rahasia.
+ * Trigger confetti animation saat diklik.
+ * Modal bisa ditutup dengan klik backdrop atau tombol tutup.
+ */
 export default function EasterEgg() {
   const [showSecret, setShowSecret] = useState(false);
   const { triggerConfetti } = useConfetti();
@@ -22,7 +29,6 @@ export default function EasterEgg() {
 
   return (
     <>
-      {/* Trigger button */}
       <button
         onClick={handleClick}
         className="fixed bottom-4 right-4 w-12 h-12 rounded-full glass-card flex items-center justify-center z-50 opacity-30 hover:opacity-60 transition-opacity"
@@ -31,7 +37,6 @@ export default function EasterEgg() {
         <span className="text-xl">✦</span>
       </button>
 
-      {/* Modal */}
       {showSecret && (
         <div 
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade-in-up"

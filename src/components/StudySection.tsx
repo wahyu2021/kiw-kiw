@@ -2,6 +2,13 @@
 
 import { useEffect, useState, useRef } from 'react';
 
+/**
+ * StudySection Component
+ * 
+ * Section berisi motivasi dan tips belajar untuk menghadapi ujian.
+ * Menggunakan IntersectionObserver untuk animasi scroll-triggered.
+ * Menampilkan pesan dukungan dan tips belajar yang praktis.
+ */
 export default function StudySection() {
   const [visible, setVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -32,7 +39,6 @@ export default function StudySection() {
 
   return (
     <section ref={sectionRef} className="relative py-20 px-6">
-      {/* Header */}
       <div className={`text-center mb-12 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         <span className="text-3xl mb-4 block">📚</span>
         <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-3">
@@ -43,7 +49,6 @@ export default function StudySection() {
         </p>
       </div>
 
-      {/* Main message */}
       <div className={`glass-card max-w-lg mx-auto p-8 text-center mb-8 transition-all duration-700 delay-200 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         <p className="text-pink-100/90 text-lg md:text-xl leading-relaxed mb-6">
           Kamu pasti lagi stres ya, badan sakit tapi harus belajar juga...
@@ -58,7 +63,6 @@ export default function StudySection() {
         </p>
       </div>
 
-      {/* Tips */}
       <div className={`max-w-lg mx-auto transition-all duration-700 delay-300 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         <h3 className="text-center text-pink-200/70 text-sm mb-4 uppercase tracking-wider">Tips dari temanmu</h3>
         <div className="space-y-3">
@@ -75,7 +79,6 @@ export default function StudySection() {
         </div>
       </div>
 
-      {/* Decorative */}
       <div className="absolute top-16 right-8 text-pink-300/20 text-3xl animate-float">✿</div>
       <div className="absolute bottom-16 left-8 text-violet-400/20 text-2xl animate-sway">★</div>
     </section>

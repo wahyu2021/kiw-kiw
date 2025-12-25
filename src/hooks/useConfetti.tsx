@@ -2,13 +2,22 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
+/**
+ * useConfetti Hook
+ * 
+ * Custom hook untuk trigger confetti animation.
+ * Menampilkan 50 particles dengan warna dan shapes random.
+ * Animation jatuh dari atas ke bawah dengan rotasi.
+ * Auto-cleanup setelah 4 detik.
+ * 
+ * @returns Object dengan fungsi triggerConfetti
+ */
 export function useConfetti() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
 
-    // Add confetti styles
     const styleId = 'confetti-styles';
     if (document.getElementById(styleId)) return;
 
@@ -70,7 +79,6 @@ export function useConfetti() {
       container.appendChild(el);
     }
 
-    // Cleanup
     setTimeout(() => container.remove(), 4000);
   }, [mounted]);
 
